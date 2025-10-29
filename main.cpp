@@ -6,27 +6,27 @@ using namespace std;
 
 int main() {
     // The map's value has been modified to a tuple with a friendship level (int), species (string), and catchphrase (string).
-    map<string, tuple<int, string, string>> villagerColors;
+    map<string, tuple<int, string, string>> vilagerInfo;
 
     // insert elements into the map
     // note how the right-hand side of the assignment are the vector elements
-    villagerColors["Audie"] = {0, "Wolf", "Foxtrot"};
-    villagerColors["Raymond"] = {0, "Cat", "Crisp"};
-    villagerColors.insert({"Marshal", {0, "Squirrel", "Sulky"}});
+    vilagerInfo["Audie"] = {0, "Wolf", "Foxtrot"};
+    vilagerInfo["Raymond"] = {0, "Cat", "Crisp"};
+    vilagerInfo.insert({"Marshal", {0, "Squirrel", "Sulky"}});
 
     // access the map using a range-based for loop
-    cout << "Villagers and their favorite colors (range-based for loop):" << endl;
-    for (auto pair : villagerColors) {
-        cout << pair.first << ": ";
-        for (auto color : pair.second)
-            cout << color << " ";
-        cout << endl;
+    cout << "Villager details:" << endl;
+    for (auto pair : vilagerInfo) {
+        cout << pair.first << " [";             // Output villager name
+        cout << get<0>(pair.second) << ", ";    // Output friendship level
+        cout << get<1>(pair.second) << ", ";    // Output species
+        cout << get<2>(pair.second) << "]\n";   // Output catchphrase
     }
 
     // access the map using iterators
     cout << "\nVillagers and their favorite colors (iterators):" << endl;
-    for (map<string, vector<string>>::iterator it = villagerColors.begin(); 
-                                               it != villagerColors.end(); ++it) {
+    for (map<string, vector<string>>::iterator it = vilagerInfo.begin();
+                                               it != vilagerInfo.end(); ++it) {
         cout << it->first << ": ";
         for (auto color : it->second) {
             cout << color << " ";
