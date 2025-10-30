@@ -13,6 +13,7 @@ void displayVillagerDetails(const map<string, tuple<int, string, string>>& villa
         cout << get<1>(pair.second) << ", ";    // Output species
         cout << get<2>(pair.second) << "]\n";   // Output catchphrase
     }
+    cout << "\n";
 }
 
 // Function to display a menu of choices labeled 1-4 to the user.
@@ -29,8 +30,9 @@ int getUserChoice() {
         cout << "Enter choice --> ";
         cin >> choice;
         if (choice < 1 || choice > 4) {
-            cout << "Invalid choice. Please enter 1, 2, 3, or 4.\n";
+            cout << "Invalid choice. Please enter 1, 2, 3, or 4.";
         }
+        cout << "\n";
     } while (choice < 1 || choice > 4);
     return choice;
 }
@@ -51,7 +53,7 @@ void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
         }
     }
     else {
-        cout << endl << searchKey << " not found." << endl;
+        cout << searchKey << " was not found." << endl;
     }
 }
 
@@ -71,7 +73,7 @@ void decreaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
         }
     }
     else {
-        cout << endl << searchKey << " not found." << endl;
+        cout << searchKey << " was not found." << endl;
     }
 }
 
@@ -83,14 +85,14 @@ void searchForVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     auto it = villagerInfo.find(searchKey);
     if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map
         // if searchKey is not found
-        cout << "\nFound " << searchKey << "'s info: [";
+        cout << "Found " << searchKey << "'s info: [";
 
         cout << get<0>(it->second) << ", ";    // Output friendship level
         cout << get<1>(it->second) << ", ";    // Output species
         cout << get<2>(it->second) << "]\n";   // Output catchphrase
     }
     else {
-        cout << endl << searchKey << " not found." << endl;
+        cout << searchKey << " was not found." << endl;
     }
 }
 int main() {
@@ -107,13 +109,10 @@ int main() {
     do {
         // Display villager details
         displayVillagerDetails(villagerInfo);
-        cout << "\n";
         // Get the user's choice
         choice = getUserChoice();
         cin.ignore();
-        cout << "\n";
         
-
         if (choice == 1) {
             increaseFriendship(villagerInfo);
         }
@@ -123,6 +122,8 @@ int main() {
         else if (choice == 3) {
             searchForVillager(villagerInfo);
         }
+
+        cout << "\n";
     } while (choice != 4);  // 4 - quit
 
 
