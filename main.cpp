@@ -1,3 +1,6 @@
+// COMSC-210 | Lab 27 | Mika Aquino
+// IDE used: Visual Studio 2022
+
 #include <iostream>
 #include <map>
 #include <vector>
@@ -73,6 +76,8 @@ void displayVillagerDetails(const map<string, tuple<int, string, string>>& villa
 // Returns: the the user's choice (an int).
 int getUserChoice() {
     int choice;
+
+    // Output menu
     cout << "Options:\n";
     cout << "1. Add Villager\n";
     cout << "2. Delete Villager\n";
@@ -80,6 +85,8 @@ int getUserChoice() {
     cout << "4. Decrease Friendship\n";
     cout << "5. Search for Villager\n";
     cout << "6. Exit\n";
+
+    // Prompt user for a valid choice
     do {
         cout << "Enter choice --> ";
         cin >> choice;
@@ -88,6 +95,7 @@ int getUserChoice() {
         }
         cout << "\n";
     } while (choice < 1 || choice > 6);
+
     return choice;
 }
 
@@ -104,7 +112,7 @@ void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     cout << "Villager name: ";
     getline(cin, name);
 
-    // Get friendship level
+    // Get valid friendship level
     do {
         cout << "Friendship level: ";
         cin >> level;
@@ -132,10 +140,12 @@ void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
 // Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
 // Returns: void
 void deleteVillager(map<string, tuple<int, string, string>>& villagerInfo) {
+    // Prompt the user for a villager name to delete
     string searchKey;
     cout << "Enter the name of the villager you want to delete --> ";
     getline(cin, searchKey);
 
+    // Find and delete the villager
     auto it = villagerInfo.find(searchKey);
     if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map if searchKey is not found
         villagerInfo.erase(it);
@@ -146,14 +156,16 @@ void deleteVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     }
 }
 
-// Function to increase the friendship level of a villager.
+// Function to increase the friendship level of a villager by 1.
 // Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
 // Returns: void
 void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
+    // Prompt the user for a villager name to increase the friendship level of
     string searchKey;
     cout << "Enter the name of the villager you want to increase the friendship level of --> ";
     getline(cin, searchKey);
 
+    // Find the villager and increase their friendship level
     auto it = villagerInfo.find(searchKey);
     if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map if searchKey is not found
         int& level = get<0>(it->second);
@@ -169,11 +181,16 @@ void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
     }
 }
 
+// Function to decrease the friendship level of a villager by 1.
+// Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
+// Returns: void
 void decreaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
+    // Prompt the user for a villager name to decrease the friendship level of
     string searchKey;
     cout << "Enter the name of the villager you want to decrease the friendship level of --> ";
     getline(cin, searchKey);
 
+    // Find the villager and decrease their friendship level
     auto it = villagerInfo.find(searchKey);
     if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map if searchKey is not found
         int& level = get<0>(it->second);
@@ -189,11 +206,16 @@ void decreaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
     }
 }
 
+// Function to search for a villager and display its info.
+// Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
+// Returns: void
 void searchForVillager(map<string, tuple<int, string, string>>& villagerInfo) {
+    // Prompt the user for a villager name to sesarch for
     string searchKey;
     cout << "Enter the name of the villager you want to search for --> ";
     getline(cin, searchKey);
 
+    // Find the villager and output their info
     auto it = villagerInfo.find(searchKey);
     if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map
         // if searchKey is not found
