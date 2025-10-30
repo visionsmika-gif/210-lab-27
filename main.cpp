@@ -31,11 +31,11 @@ int getUserChoice() {
     do {
         cout << "Enter choice --> ";
         cin >> choice;
-        if (choice < 1 || choice > 4) {
-            cout << "Invalid choice. Please enter 1, 2, 3, or 4.";
+        if (choice < 1 || choice > 6) {
+            cout << "Invalid choice. Please enter a number between 1 and 6 (inclusive).";
         }
         cout << "\n";
-    } while (choice < 1 || choice > 4);
+    } while (choice < 1 || choice > 6);
     return choice;
 }
 
@@ -50,11 +50,11 @@ void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     getline(cin, name);
 
     // Get friendship level
-    cout << "Friendship level: ";
     do {
+        cout << "Friendship level: ";
         cin >> level;
         if (level < 0 || level > 10) {
-            cout << "Invalid choice. Friendship level must be between 0 and 10 (inclusive). Try again.";
+            cout << "Invalid friendship level. Please enter a number between 0 and 10 (inclusive).\n";
         }
     } while (level < 0 || level > 10);
     cin.ignore();
@@ -149,7 +149,7 @@ int main() {
     // The map's value has been modified to a tuple with a friendship level (int), species (string), and catchphrase (string).
     map<string, tuple<int, string, string>> villagerInfo;
 
-    // Insert elements into the map.
+    // Insert starter elements into the map.
     villagerInfo["Audie"] = { 0, "Wolf", "Foxtrot" };
     villagerInfo["Raymond"] = { 0, "Cat", "Crisp" };
     villagerInfo.insert({ "Marshal", {0, "Squirrel", "Sulky"} });
@@ -159,77 +159,28 @@ int main() {
     do {
         // Display villager details
         displayVillagerDetails(villagerInfo);
+
         // Get the user's choice
         choice = getUserChoice();
         cin.ignore();
         
-        if (choice == 1) {
+        if (choice == 1) {                      // 1. Add Villager
             addVillager(villagerInfo);
         }
-        else if (choice == 2) {
+        else if (choice == 2) {                 // 2. Delete Villager
             deleteVillager(villagerInfo);
         }
-        else if (choice == 3) {
+        else if (choice == 3) {                 // 3. Increase Friendship
             increaseFriendship(villagerInfo);
         }
-        else if (choice == 4) {
+        else if (choice == 4) {                 // 4. Decrease Friendship
             decreaseFriendship(villagerInfo);
         }
-        else if (choice == 5) {
+        else if (choice == 5) {                 // 5. Search for Villager
             searchForVillager(villagerInfo);
         }
-
         cout << "\n";
-    } while (choice != 6);  // 6 - quit
-
-
-    /*
-    // insert elements into the map
-    // note how the right-hand side of the assignment are the vector elements
-    villagerInfo["Audie"] = {0, "Wolf", "Foxtrot"};
-    villagerInfo["Raymond"] = {0, "Cat", "Crisp"};
-    villagerInfo.insert({"Marshal", {0, "Squirrel", "Sulky"}});
-
-    // access the map using a range-based for loop
-    cout << "Villager details:" << endl;
-    for (auto pair : villagerInfo) {
-        cout << pair.first << " [";             // Output villager name
-        cout << get<0>(pair.second) << ", ";    // Output friendship level
-        cout << get<1>(pair.second) << ", ";    // Output species
-        cout << get<2>(pair.second) << "]\n";   // Output catchphrase
-    }
-
-    // access the map using iterators
-    cout << "\nVillagers and their favorite colors (iterators):" << endl;
-    for (map<string, tuple<int, string, string>>::iterator it = villagerInfo.begin();
-                                               it != villagerInfo.end(); ++it) {
-        cout << it->first << " [";
-        cout << get<0>(it->second) << ", ";    // Output friendship level
-        cout << get<1>(it->second) << ", ";    // Output species
-        cout << get<2>(it->second) << "]\n";   // Output catchphrase
-    }
-
-    // delete an element
-    villagerInfo.erase("Raymond");
-
-    // search for an element using .find() to avoid errors
-    string searchKey = "Audie";
-    auto it = villagerInfo.find(searchKey);
-    if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map
-                                    // if searchKey is not found
-        cout << "\nFound " << searchKey << "'s info: [";
-
-        cout << get<0>(it->second) << ", ";    // Output friendship level
-        cout << get<1>(it->second) << ", ";    // Output species
-        cout << get<2>(it->second) << "]\n";   // Output catchphrase
-    } else
-        cout << endl << searchKey << " not found." << endl;
-
-    // report size, clear, report size again to confirm map operations
-    cout << "\nSize before clear: " << villagerInfo.size() << endl;
-    villagerInfo.clear();
-    cout << "Size after clear: " << villagerInfo.size() << endl;
-    */
+    } while (choice != 6);                      // 6. Exit
 
     return 0;
 }
