@@ -57,6 +57,7 @@ void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
             cout << "Invalid choice. Friendship level must be between 0 and 10 (inclusive). Try again.";
         }
     } while (level < 0 || level > 10);
+    cin.ignore();
 
     // Get species
     cout << "Species: ";
@@ -69,6 +70,21 @@ void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     villagerInfo[name] = {level, species, catchphrase};
 
     cout << name << " added.\n";
+}
+
+void deleteVillager(map<string, tuple<int, string, string>>& villagerInfo) {
+    string searchKey;
+    cout << "Enter the name of the villager you want to delete --> ";
+    getline(cin, searchKey);
+
+    auto it = villagerInfo.find(searchKey);
+    if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map if searchKey is not found
+        villagerInfo.erase(it);
+        cout << searchKey << " deleted.\n";
+    }
+    else {
+        cout << searchKey << " was not found." << endl;
+    }
 }
 
 void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
@@ -151,7 +167,7 @@ int main() {
             addVillager(villagerInfo);
         }
         else if (choice == 2) {
-            // deleteVillager(villagerInfo);
+            deleteVillager(villagerInfo);
         }
         else if (choice == 3) {
             increaseFriendship(villagerInfo);
