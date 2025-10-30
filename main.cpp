@@ -5,11 +5,22 @@
 #include <string>
 using namespace std;
 
+void displayVillagerDetails(const map<string, tuple<int, string, string>>& villagerInfo) {
+    cout << "Villager details:" << endl;
+    for (auto pair : villagerInfo) {
+        cout << pair.first << " [";             // Output villager name
+        cout << get<0>(pair.second) << ", ";    // Output friendship level
+        cout << get<1>(pair.second) << ", ";    // Output species
+        cout << get<2>(pair.second) << "]\n";   // Output catchphrase
+    }
+}
+
 // Function to display a menu of choices labeled 1-4 to the user.
 // Args:    none
 // Returns: the the user's choice (an int).
 int getUserChoice() {
     int choice;
+    cout << "Options:\n";
     cout << "1. Increase Friendship\n";
     cout << "2. Decrease Friendship\n";
     cout << "3. Search for Villager\n";
@@ -46,7 +57,7 @@ void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
 
 void decreaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
     string searchKey;
-    cout << "Enter the name of the villager you want to increase the friendship level of --> ";
+    cout << "Enter the name of the villager you want to decrease the friendship level of --> ";
     getline(cin, searchKey);
 
     auto it = villagerInfo.find(searchKey);
@@ -78,46 +89,41 @@ void searchForVillager(map<string, tuple<int, string, string>>& villagerInfo) {
         cout << get<1>(it->second) << ", ";    // Output species
         cout << get<2>(it->second) << "]\n";   // Output catchphrase
     }
-    else
+    else {
         cout << endl << searchKey << " not found." << endl;
+    }
 }
 int main() {
     // The map's value has been modified to a tuple with a friendship level (int), species (string), and catchphrase (string).
     map<string, tuple<int, string, string>> villagerInfo;
 
+    // Insert elements into the map.
     villagerInfo["Audie"] = { 0, "Wolf", "Foxtrot" };
     villagerInfo["Raymond"] = { 0, "Cat", "Crisp" };
     villagerInfo.insert({ "Marshal", {0, "Squirrel", "Sulky"} });
 
-    int choice = getUserChoice();
-    cin.ignore();
+    // Output the menu, allowing the user to choose what to do with the villagers.
+    int choice;
+    do {
+        // Display villager details
+        displayVillagerDetails(villagerInfo);
+        cout << "\n";
+        // Get the user's choice
+        choice = getUserChoice();
+        cin.ignore();
+        cout << "\n";
+        
 
-    while (choice != 4) {
         if (choice == 1) {
             increaseFriendship(villagerInfo);
         }
         else if (choice == 2) {
-            // decreaseFriendship(villagerInfo);
+            decreaseFriendship(villagerInfo);
         }
         else if (choice == 3) {
-            // searchForVillager(villagerInfo);
+            searchForVillager(villagerInfo);
         }
-        else {
-            //
-        }
-
-        cout << "Villager details:" << endl;
-        for (auto pair : villagerInfo) {
-            cout << pair.first << " [";             // Output villager name
-            cout << get<0>(pair.second) << ", ";    // Output friendship level
-            cout << get<1>(pair.second) << ", ";    // Output species
-            cout << get<2>(pair.second) << "]\n";   // Output catchphrase
-        }
-
-        choice = getUserChoice();
-        cin.ignore();
-    }
-
+    } while (choice != 4);  // 4 - quit
 
 
     /*
