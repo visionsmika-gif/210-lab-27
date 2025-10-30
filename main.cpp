@@ -22,10 +22,12 @@ void displayVillagerDetails(const map<string, tuple<int, string, string>>& villa
 int getUserChoice() {
     int choice;
     cout << "Options:\n";
-    cout << "1. Increase Friendship\n";
-    cout << "2. Decrease Friendship\n";
-    cout << "3. Search for Villager\n";
-    cout << "4. Exit\n";
+    cout << "1. Add Villager\n";
+    cout << "2. Delete Villager\n";
+    cout << "3. Increase Friendship\n";
+    cout << "4. Decrease Friendship\n";
+    cout << "5. Search for Villager\n";
+    cout << "6. Exit\n";
     do {
         cout << "Enter choice --> ";
         cin >> choice;
@@ -35,6 +37,38 @@ int getUserChoice() {
         cout << "\n";
     } while (choice < 1 || choice > 4);
     return choice;
+}
+
+void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
+    string name;
+    int level;
+    string species;
+    string catchphrase;
+    
+    // Get name
+    cout << "Villager name: ";
+    getline(cin, name);
+
+    // Get friendship level
+    cout << "Friendship level: ";
+    do {
+        cin >> level;
+        if (level < 0 || level > 10) {
+            cout << "Invalid choice. Friendship level must be between 0 and 10 (inclusive). Try again.";
+        }
+    } while (level < 0 || level > 10);
+
+    // Get species
+    cout << "Species: ";
+    getline(cin, species);
+
+    // Get catchphrase
+    cout << "Catchphrase: ";
+    getline(cin, catchphrase);
+
+    villagerInfo[name] = {level, species, catchphrase};
+
+    cout << name << " added.\n";
 }
 
 void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
@@ -114,17 +148,23 @@ int main() {
         cin.ignore();
         
         if (choice == 1) {
-            increaseFriendship(villagerInfo);
+            addVillager(villagerInfo);
         }
         else if (choice == 2) {
-            decreaseFriendship(villagerInfo);
+            // deleteVillager(villagerInfo);
         }
         else if (choice == 3) {
+            increaseFriendship(villagerInfo);
+        }
+        else if (choice == 4) {
+            decreaseFriendship(villagerInfo);
+        }
+        else if (choice == 5) {
             searchForVillager(villagerInfo);
         }
 
         cout << "\n";
-    } while (choice != 4);  // 4 - quit
+    } while (choice != 6);  // 6 - quit
 
 
     /*
