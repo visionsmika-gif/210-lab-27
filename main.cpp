@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include <tuple>
+#include <string>
 using namespace std;
 
 // Function to display a menu of choices labeled 1-4 to the user.
@@ -26,17 +27,16 @@ int getUserChoice() {
 void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
     string searchKey;
     cout << "Enter the name of the villager you want to increase the friendship level of --> ";
-    cin >> searchKey;
+    getline(cin, searchKey);
 
     auto it = villagerInfo.find(searchKey);
     if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map if searchKey is not found
-        int level = get<0>(it->second);
+        int& level = get<0>(it->second);
         if (level < 10) {
-            ++level;
-            cout << searchKey << "'s friendship level is now " << level << ".\n";
+            cout << searchKey << "'s friendship level is now " << ++level << ".\n";
         }
         else {
-            cout << "Friendship level is already maxed.\n";
+            cout << searchKey << "'s friendship level is already maxed.\n";
         }
     }
     else {
@@ -44,6 +44,43 @@ void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
     }
 }
 
+void decreaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
+    string searchKey;
+    cout << "Enter the name of the villager you want to increase the friendship level of --> ";
+    getline(cin, searchKey);
+
+    auto it = villagerInfo.find(searchKey);
+    if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map if searchKey is not found
+        int& level = get<0>(it->second);
+        if (level > 0) {
+            cout << searchKey << "'s friendship level is now " << --level << ".\n";
+        }
+        else {
+            cout << searchKey << "'s friendship level is already at a minimum (0).\n";
+        }
+    }
+    else {
+        cout << endl << searchKey << " not found." << endl;
+    }
+}
+
+void searchForVillager(map<string, tuple<int, string, string>>& villagerInfo) {
+    string searchKey;
+    cout << "Enter the name of the villager you want to search for --> ";
+    getline(cin, searchKey);
+
+    auto it = villagerInfo.find(searchKey);
+    if (it != villagerInfo.end()) {  // the iterator points to beyond the end of the map
+        // if searchKey is not found
+        cout << "\nFound " << searchKey << "'s info: [";
+
+        cout << get<0>(it->second) << ", ";    // Output friendship level
+        cout << get<1>(it->second) << ", ";    // Output species
+        cout << get<2>(it->second) << "]\n";   // Output catchphrase
+    }
+    else
+        cout << endl << searchKey << " not found." << endl;
+}
 int main() {
     // The map's value has been modified to a tuple with a friendship level (int), species (string), and catchphrase (string).
     map<string, tuple<int, string, string>> villagerInfo;
@@ -53,6 +90,7 @@ int main() {
     villagerInfo.insert({ "Marshal", {0, "Squirrel", "Sulky"} });
 
     int choice = getUserChoice();
+    cin.ignore();
 
     while (choice != 4) {
         if (choice == 1) {
@@ -77,6 +115,7 @@ int main() {
         }
 
         choice = getUserChoice();
+        cin.ignore();
     }
 
 
