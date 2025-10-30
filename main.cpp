@@ -5,6 +5,58 @@
 #include <string>
 using namespace std;
 
+void displayVillagerDetails(const map<string, tuple<int, string, string>>& villagerInfo);   // Function to display all villager details.
+int getUserChoice();                                                                        // Function to display a menu and prompt the user for a choice.
+
+void addVillager(map<string, tuple<int, string, string>>& villagerInfo);                    // Function for Choice 1 - Add Villager
+void deleteVillager(map<string, tuple<int, string, string>>& villagerInfo);                 // Function for Choice 2 - Delete Villager
+void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo);             // Function for Choice 3 - Increase Friendship
+void decreaseFriendship(map<string, tuple<int, string, string>>& villagerInfo);             // Function for Choice 4 - Decrease Friendship
+void searchForVillager(map<string, tuple<int, string, string>>& villagerInfo);              // Function for Choice 5 - Search for Villager
+
+int main() {
+    // The map's value has been modified to a tuple with a friendship level (int), species (string), and catchphrase (string).
+    map<string, tuple<int, string, string>> villagerInfo;
+
+    // Insert starter elements into the map.
+    villagerInfo["Audie"] = { 0, "Wolf", "Foxtrot" };
+    villagerInfo["Raymond"] = { 0, "Cat", "Crisp" };
+    villagerInfo.insert({ "Marshal", {0, "Squirrel", "Sulky"} });
+
+    // Output the menu, allowing the user to choose what to do with the villagers.
+    int choice;
+    do {
+        // Display villager details
+        displayVillagerDetails(villagerInfo);
+
+        // Get the user's choice
+        choice = getUserChoice();
+        cin.ignore();
+        
+        if (choice == 1) {                      // 1. Add Villager
+            addVillager(villagerInfo);
+        }
+        else if (choice == 2) {                 // 2. Delete Villager
+            deleteVillager(villagerInfo);
+        }
+        else if (choice == 3) {                 // 3. Increase Friendship
+            increaseFriendship(villagerInfo);
+        }
+        else if (choice == 4) {                 // 4. Decrease Friendship
+            decreaseFriendship(villagerInfo);
+        }
+        else if (choice == 5) {                 // 5. Search for Villager
+            searchForVillager(villagerInfo);
+        }
+        cout << "\n";
+    } while (choice != 6);                      // 6. Exit
+
+    return 0;
+}
+
+// Function to display all the villagers' details, including their name, friendship level, species, and catchphrase.
+// Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
+// Returns: void
 void displayVillagerDetails(const map<string, tuple<int, string, string>>& villagerInfo) {
     cout << "Villager details:" << endl;
     for (auto pair : villagerInfo) {
@@ -16,7 +68,7 @@ void displayVillagerDetails(const map<string, tuple<int, string, string>>& villa
     cout << "\n";
 }
 
-// Function to display a menu of choices labeled 1-4 to the user.
+// Function to display a menu of choices labeled 1-4 to the user and get the user's choice.
 // Args:    none
 // Returns: the the user's choice (an int).
 int getUserChoice() {
@@ -39,12 +91,15 @@ int getUserChoice() {
     return choice;
 }
 
+// Function to add a villager to the map.
+// Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
+// Returns: void
 void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     string name;
     int level;
     string species;
     string catchphrase;
-    
+
     // Get name
     cout << "Villager name: ";
     getline(cin, name);
@@ -67,11 +122,15 @@ void addVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     cout << "Catchphrase: ";
     getline(cin, catchphrase);
 
-    villagerInfo[name] = {level, species, catchphrase};
+    // Insert villager
+    villagerInfo[name] = { level, species, catchphrase };
 
     cout << name << " added.\n";
 }
 
+// Function to delete a villager from the map.
+// Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
+// Returns: void
 void deleteVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     string searchKey;
     cout << "Enter the name of the villager you want to delete --> ";
@@ -87,6 +146,9 @@ void deleteVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     }
 }
 
+// Function to increase the friendship level of a villager.
+// Args:    a villager map with a key (name) and a value (friendship level, species, catchphrase)
+// Returns: void
 void increaseFriendship(map<string, tuple<int, string, string>>& villagerInfo) {
     string searchKey;
     cout << "Enter the name of the villager you want to increase the friendship level of --> ";
@@ -144,43 +206,4 @@ void searchForVillager(map<string, tuple<int, string, string>>& villagerInfo) {
     else {
         cout << searchKey << " was not found." << endl;
     }
-}
-int main() {
-    // The map's value has been modified to a tuple with a friendship level (int), species (string), and catchphrase (string).
-    map<string, tuple<int, string, string>> villagerInfo;
-
-    // Insert starter elements into the map.
-    villagerInfo["Audie"] = { 0, "Wolf", "Foxtrot" };
-    villagerInfo["Raymond"] = { 0, "Cat", "Crisp" };
-    villagerInfo.insert({ "Marshal", {0, "Squirrel", "Sulky"} });
-
-    // Output the menu, allowing the user to choose what to do with the villagers.
-    int choice;
-    do {
-        // Display villager details
-        displayVillagerDetails(villagerInfo);
-
-        // Get the user's choice
-        choice = getUserChoice();
-        cin.ignore();
-        
-        if (choice == 1) {                      // 1. Add Villager
-            addVillager(villagerInfo);
-        }
-        else if (choice == 2) {                 // 2. Delete Villager
-            deleteVillager(villagerInfo);
-        }
-        else if (choice == 3) {                 // 3. Increase Friendship
-            increaseFriendship(villagerInfo);
-        }
-        else if (choice == 4) {                 // 4. Decrease Friendship
-            decreaseFriendship(villagerInfo);
-        }
-        else if (choice == 5) {                 // 5. Search for Villager
-            searchForVillager(villagerInfo);
-        }
-        cout << "\n";
-    } while (choice != 6);                      // 6. Exit
-
-    return 0;
 }
